@@ -23,6 +23,10 @@ public class Usuario {
         this.estamento = estamento;
     }
 
+    public Usuario() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public int getID() {
         return ID;
     }
