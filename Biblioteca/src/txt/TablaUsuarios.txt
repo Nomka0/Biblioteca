@@ -1,0 +1,4 @@
+12345, el pepe, elpepe@curifeos.com, 9876543210, Estudiante
+12345, el pepe, elpepe@curifeos.com, 9876543210, Estudiante
+45678, asdjd, assafh, 56789, Estudiante
+56789, ashdg, asdhj, 34567, Estudiante

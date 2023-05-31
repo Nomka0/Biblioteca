@@ -4,6 +4,14 @@
  */
 package vista;
 
+import controlador.ControladorRecursos;
+import controlador.ControladorUsuarios;
+import dao.RecursoDAO;
+import dao.RecursoDAOImpl;
+import dao.UsuarioDAO;
+import dao.UsuarioDAOImpl;
+import modelo.Recurso;
+import modelo.Usuario;
 import vista.AdministrarUsuarios;
 /**
  *
@@ -95,14 +103,26 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        RecursoDAO dao = new RecursoDAOImpl();
+        dao.obtenerTodosLosRecursos().forEach(x -> System.out.println(x.getTitulo()));
+        AdministrarRecursos adminRecursos = new AdministrarRecursos();
+        Recurso recurso = new Recurso();
+        ControladorRecursos controller = new ControladorRecursos(adminRecursos,recurso);
+        controller.leerArchivos();  
+        dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new AdministrarUsuarios().setVisible(true);
+        UsuarioDAO dao = new UsuarioDAOImpl();
+        dao.obtenerTodosLosUsuarios().forEach(x -> System.out.println(x.getNombre()));
+        AdministrarUsuarios adminUsuarios = new AdministrarUsuarios();
+        Usuario modelo = new Usuario();
+        ControladorUsuarios controller = new ControladorUsuarios(adminUsuarios,modelo);
+        controller.leerArchivos();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */

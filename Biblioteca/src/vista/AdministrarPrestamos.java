@@ -5,7 +5,7 @@
 package vista;
 
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import modelo.Usuario;
@@ -13,20 +13,18 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JComboBox;
+import modelo.Recurso;
 
 /**
  *
  * @author jhon
  */
-public class AdministrarUsuarios extends javax.swing.JFrame {
-
-    private Usuario usuario;
+public class AdministrarPrestamos extends javax.swing.JFrame {
 
     /**
      * Creates new form AdministrarUsuarios
      */
-    public AdministrarUsuarios() {
+    public AdministrarPrestamos() {
         initComponents();
     }
 
@@ -40,21 +38,21 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        estamento = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
+        txtTitulo = new javax.swing.JTextField();
+        txtAutor = new javax.swing.JTextField();
+        txtGenero = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnListar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        tipoRecurso = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -63,27 +61,24 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
 
-        estamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estudiante", "Empleado", "Profesor" }));
-        estamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estamentoActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("ID :");
 
-        jLabel2.setText("Nombre :");
+        jLabel2.setText("Titulo :");
 
-        jLabel3.setText("Correo :");
+        jLabel3.setText("Autor :");
 
-        jLabel4.setText("Telefono :");
+        jLabel4.setText("Género :");
 
-        jLabel5.setText("Estamento :");
+        jLabel5.setText("Tipo :");
 
         btnGuardar.setText("Guardar");
 
         btnListar.setText("Listar");
-        btnListar.setToolTipText("");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -96,25 +91,40 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
 
         btnEliminar.setText("Eliminar");
 
+        tipoRecurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libro", "Revista", "Comic" }));
+        tipoRecurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipoRecursoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                    .addComponent(estamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtCorreo)
-                    .addComponent(txtNombre)
-                    .addComponent(txtID))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(62, 62, 62)
+                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtGenero)
+                            .addComponent(tipoRecurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -137,24 +147,24 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnListar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar)
                     .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(estamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addComponent(tipoRecurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalles"));
@@ -162,7 +172,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             data,
             new String [] {
-                "ID", "Nombre", "Correo", "Telefono", "Estamento"
+                "ID", "Titulo", "Autor", "Género", "Tipo"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -212,18 +222,24 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         return Integer.parseInt(txtID.getText());
     }
 
-    public long getTelefono() {
-        return Long.parseLong(txtTelefono.getText());
+    public String getGenero() {
+        return txtGenero.getText();
     }
 
+    public void addComboBoxListener(ActionListener listenControles) {
+        tipoRecurso.addActionListener(listenControles);
+    }
     
-
-    public String getNombre() {
-        return txtNombre.getText();
+     public JComboBox<String> getComboBox(){
+        return tipoRecurso;
     }
 
-    public String getCorreo() {
-        return txtCorreo.getText();
+    public String getTitulo() {
+        return txtTitulo.getText();
+    }
+
+    public String getAutor() {
+        return txtAutor.getText();
     }
     
     public void setID(int ID ) {
@@ -233,30 +249,26 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     public void setIDVacio() {
         txtID.setText("");
     }
+    
+    public void setTitulo(String titulo) {
+        txtTitulo.setText(titulo);
+    }
 
-    public void setTelefono(long telefono) {
-        txtTelefono.setText(String.valueOf(telefono));
+    public void setAutor(String autor) {
+        txtAutor.setText(autor);
     }
     
-    public void setTelefonoVacio() {
-        txtTelefono.setText("");
+    public void setGenero(String genero) {
+        txtGenero.setText(genero);
     }
-
-    public void setCamposVacios(){
-        setTelefonoVacio();
+    
+     public void setCamposVacios(){
+        setGenero("");
         setIDVacio();
-        setCorreo("");
-        setNombre("");
-    }
-    
-
-    public void setNombre(String nombre) {
-        txtNombre.setText(nombre);
+        setTitulo("");
+        setAutor("");
     }
 
-    public void setCorreo(String correo) {
-        txtCorreo.setText(correo);
-    }
 
     public void displayErrorMessage(String erroMessage) {
         JOptionPane.showMessageDialog(this, erroMessage);
@@ -265,18 +277,21 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     public void addBtnGuardarListener(ActionListener listenControles) {
         btnGuardar.addActionListener(listenControles);
     }
-
-    public void addComboBoxListener(ActionListener listenControles) {
-        estamento.addActionListener(listenControles);
+    
+    public void addBtnListarListener(ActionListener listenControles){
+        btnListar.addActionListener(listenControles);
     }
     
-    public JComboBox<String> getComboBox(){
-        return estamento;
+    public void addBtnEditarListener(ActionListener listenControles){
+        btnEditar.addActionListener(listenControles);
+    }
+    
+    public void addBtnEliminarListener(ActionListener listenControles){
+        btnEliminar.addActionListener(listenControles);
     }
 
-    
-    public Object[] getDatosUsuario(Usuario usuario){
-        Object[] elemento = {usuario.getID(), usuario.getNombre(), usuario.getCorreo(), usuario.getTelefono(), usuario.getEstamento()};
+    public Object[] getDatosRecurso(Recurso recurso){
+        Object[] elemento = {recurso.getID(), recurso.getTitulo(), recurso.getAutor(), recurso.getGenero(), recurso.getTipoRecurso()};
         return elemento;
     }
     
@@ -284,17 +299,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         return data;
     }
     
-    public void deshabilitarGuardar(){
-        btnGuardar.setEnabled(false);
-    }
-    
-    public void habilitarGuardar(){
-        btnGuardar.setEnabled(true);
-    }
-    
-   
-    
-    public void addDatosTabla(Usuario usuario) {
+    public void addDatosTabla(Recurso recurso) {
         // Crear una nueva matriz temporal con una fila adicional
         Object[][] newData = new Object[data.length + 1][];
 
@@ -304,7 +309,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         }
 
         // Añadir el nuevo elemento a newData
-        newData[newData.length - 1] = getDatosUsuario(usuario);
+        newData[newData.length - 1] = getDatosRecurso(recurso);
 
         // Asignar newData a data
         data = newData;
@@ -323,21 +328,33 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         System.out.println(jTable1.getModel());
 
     }
+    
+    public void deshabilitarGuardar(){
+        btnGuardar.setEnabled(false);
+    }
+    
+    public void habilitarGuardar(){
+        btnGuardar.setEnabled(true);
+    }
+    
+
+
+    /**
+     */
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void estamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estamentoActionPerformed
+    private void tipoRecursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoRecursoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_estamentoActionPerformed
+    }//GEN-LAST:event_tipoRecursoActionPerformed
 
     public void btnGuardarListener(ActionListener listenControles) {
         btnGuardar.addActionListener(listenControles);
-    }
-    
-    public void btnListarListener(ActionListener listenControles) {
-        btnListar.addActionListener(listenControles);
     }
 
     /**
@@ -357,25 +374,31 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministrarPrestamos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministrarPrestamos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministrarPrestamos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministrarPrestamos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdministrarUsuarios().setVisible(true);
+                new AdministrarPrestamos().setVisible(true);
             }
         });
     }
 
-    
     private DefaultTableModel model;
     private Object[][] data = {};
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -383,7 +406,6 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnListar;
-    private javax.swing.JComboBox<String> estamento;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -394,11 +416,10 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JComboBox<String> tipoRecurso;
+    private javax.swing.JTextField txtAutor;
+    private javax.swing.JTextField txtGenero;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
-
-
 }

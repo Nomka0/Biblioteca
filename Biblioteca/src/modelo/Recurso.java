@@ -22,6 +22,10 @@ public class Recurso {
         this.tipoRecurso = tipoRecurso;
     }
 
+    public Recurso() {
+        
+    }
+
     public int getID() {
         return ID;
     }

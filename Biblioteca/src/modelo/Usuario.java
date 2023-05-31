@@ -12,10 +12,10 @@ public class Usuario {
     private int ID;
     private String nombre;
     private String correo;
-    private String telefono;
+    private long telefono;
     private String estamento;
 
-    public Usuario(int ID, String nombre, String correo, String telefono, String estamento) {
+    public Usuario(int ID, String nombre, String correo, long telefono, String estamento) {
         this.ID = ID;
         this.nombre = nombre;
         this.correo = correo;
@@ -24,7 +24,7 @@ public class Usuario {
     }
 
     public Usuario() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
 
     public int getID() {
@@ -39,7 +39,7 @@ public class Usuario {
         return correo;
     }
 
-    public String getTelefono() {
+    public long getTelefono() {
         return telefono;
     }
 
@@ -59,7 +59,7 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(long telefono) {
         this.telefono = telefono;
     }
 
