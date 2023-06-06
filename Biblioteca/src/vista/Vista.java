@@ -4,12 +4,16 @@
  */
 package vista;
 
+import controlador.ControladorPrestamos;
 import controlador.ControladorRecursos;
 import controlador.ControladorUsuarios;
+import dao.PrestamoDAO;
+import dao.PrestamoDAOImpl;
 import dao.RecursoDAO;
 import dao.RecursoDAOImpl;
 import dao.UsuarioDAO;
 import dao.UsuarioDAOImpl;
+import modelo.Prestamo;
 import modelo.Recurso;
 import modelo.Usuario;
 import vista.AdministrarUsuarios;
@@ -99,7 +103,13 @@ public class Vista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        PrestamoDAO dao = new PrestamoDAOImpl();
+        dao.obtenerTodosLosPrestamos().forEach(x -> System.out.println(x.getID()));
+        AdministrarPrestamos adminPrestamos = new AdministrarPrestamos();
+        Prestamo prestamo = new Prestamo();
+        ControladorPrestamos controller = new ControladorPrestamos(adminPrestamos,prestamo);
+        controller.leerArchivos();  
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -116,6 +126,7 @@ public class Vista extends javax.swing.JFrame {
         UsuarioDAO dao = new UsuarioDAOImpl();
         dao.obtenerTodosLosUsuarios().forEach(x -> System.out.println(x.getNombre()));
         AdministrarUsuarios adminUsuarios = new AdministrarUsuarios();
+        adminUsuarios.habilitarEliminar(false);
         Usuario modelo = new Usuario();
         ControladorUsuarios controller = new ControladorUsuarios(adminUsuarios,modelo);
         controller.leerArchivos();

@@ -13,18 +13,33 @@ import modelo.Usuario;
  */
 public class Prestamo {
     private int ID;
-    private Recurso recurso;
-    private Usuario usuario;
+    private int idrecurso;
+    private int idusuario;
     private String estado;
-    private Date fechaRegistro, fechaLimite, fechaDevolucion;
+    private String diaRegistro, mesRegistro, anioRegistro,
+    diaLimite, mesLimite, anioLimite,diaDevolucion, mesDevolucion, anioDevolucion;
 
-    public Prestamo(int ID, Recurso recurso, Usuario usuario, String estado, Date fechaRegistro, Date fechaLimite, Date fechaDevolucion) {
-        this.recurso = recurso;
-        this.usuario = usuario;
+    public Prestamo(int ID, int usuario,int recurso, String estado,
+     String diaRegistro, String mesRegistro, String anioRegistro,
+     String diaLimite, String mesLimite, String anioLimite,
+     String diaDevolucion, String mesDevolucion, String anioDevolucion) {
+        this.idrecurso = recurso;
+        this.idusuario = usuario;
         this.estado = estado;
-        this.fechaRegistro = fechaRegistro;
-        this.fechaLimite = fechaLimite;
-        this.fechaDevolucion = fechaDevolucion;
+        this.diaRegistro = diaRegistro;
+        this.mesRegistro = diaRegistro;
+        this.anioRegistro = diaRegistro;
+
+        this.diaLimite = diaLimite;
+        this.mesLimite = mesLimite;
+        this.anioLimite = anioLimite;
+
+        this.diaDevolucion = diaDevolucion;
+        this.mesDevolucion = mesDevolucion;
+        this.anioDevolucion = anioDevolucion;
+    }
+
+    public Prestamo() {
     }
 
     public int getID() {
@@ -33,28 +48,28 @@ public class Prestamo {
     
     
 
-    public Recurso getRecurso() {
-        return recurso;
+    public int getIDrecurso() {
+        return idrecurso;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public int getIDusuario() {
+        return idusuario;
     }
 
     public String getEstado() {
         return estado;
     }
 
-    public Date getFechaRegistro() {
-        return fechaRegistro;
+    public String getFechaRegistro() {
+        return diaRegistro + "/ " + mesRegistro + "/ " + anioRegistro;
     }
 
-    public Date getFechaLimite() {
-        return fechaLimite;
+    public String getFechaLimite() {
+        return diaLimite + "/ " + mesLimite + "/ " + anioLimite;
     }
 
-    public Date getFechaDevolucion() {
-        return fechaDevolucion;
+    public String getFechaDevolucion() {
+        return diaDevolucion + "/ " + mesDevolucion + "/ " + anioDevolucion;
     }
 
     public void setID(int ID) {
@@ -62,30 +77,33 @@ public class Prestamo {
     }
     
 
-    public void setRecurso(Recurso recurso) {
-        this.recurso = recurso;
+    public void setIDrecurso(int idrecurso) {
+        this.idrecurso = idrecurso;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setIDusuario(int idusuario) {
+        this.idusuario = idusuario;
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
+    public void setFechaRegistro(String diaReg, String mesReg, String anioReg) {
+        diaRegistro = diaReg;
+        mesRegistro = mesReg;
+        anioRegistro = anioReg;
     }
 
-    public void setFechaLimite(Date fechaLimite) {
-        this.fechaLimite = fechaLimite;
+    public void setFechaLimite(String diaLim, String mesLim, String anioLim) {
+        diaLimite = diaLim;
+        mesLimite = mesLim;
+        anioLimite = anioLim;
     }
 
-    public void setFechaDevolucion(Date fechaDevolucion) {
-        this.fechaDevolucion = fechaDevolucion;
-    }
-    
-    
-        
+    public void setFechaDevolucion(String diaDev, String mesDev, String anioDev) {
+        diaDevolucion = diaDev;
+        mesDevolucion = mesDev;
+        anioDevolucion = anioDev;
+    }    
 }

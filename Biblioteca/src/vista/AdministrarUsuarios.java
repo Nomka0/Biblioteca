@@ -5,7 +5,10 @@
 package vista;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import modelo.Usuario;
@@ -38,7 +41,8 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        
+        vacio = true;
         jPanel1 = new javax.swing.JPanel();
         estamento = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -53,7 +57,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnListar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnOk = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -86,13 +90,8 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         btnListar.setToolTipText("");
 
         btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
 
-        jButton4.setText("Ok");
+        btnOk.setText("Ok");
 
         btnEliminar.setText("Eliminar");
 
@@ -122,7 +121,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, Short.MAX_VALUE))
+                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 49, Short.MAX_VALUE))
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -144,7 +143,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar)
-                    .addComponent(jButton4))
+                    .addComponent(btnOk))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -208,6 +207,10 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public JTable getTabla() {
+        return jTable1;
+    }
+
     public int getID() {
         return Integer.parseInt(txtID.getText());
     }
@@ -216,8 +219,6 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         return Long.parseLong(txtTelefono.getText());
     }
 
-    
-
     public String getNombre() {
         return txtNombre.getText();
     }
@@ -225,75 +226,99 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     public String getCorreo() {
         return txtCorreo.getText();
     }
-    
-    public void setID(int ID ) {
+
+    public void setID(int ID) {
         txtID.setText(String.valueOf(ID));
+       
     }
-    
+
     public void setIDVacio() {
         txtID.setText("");
     }
 
     public void setTelefono(long telefono) {
         txtTelefono.setText(String.valueOf(telefono));
+        
     }
-    
+
     public void setTelefonoVacio() {
         txtTelefono.setText("");
     }
 
-    public void setCamposVacios(){
+    public void setCamposVacios() {
         setTelefonoVacio();
         setIDVacio();
         setCorreo("");
         setNombre("");
+        
     }
-    
+
+    public boolean getEstaVacio(){
+        return vacio;
+    }
 
     public void setNombre(String nombre) {
         txtNombre.setText(nombre);
+        
     }
 
     public void setCorreo(String correo) {
         txtCorreo.setText(correo);
+        
+    }
+
+    //para no usar todos los setters uno por uno
+    public void setDatos(int ID, String nombre, String correo, long telefono) {
+        setID(ID);
+        setNombre(nombre);
+        setCorreo(correo);
+        setTelefono(telefono);
+        vacio = false;
     }
 
     public void displayErrorMessage(String erroMessage) {
         JOptionPane.showMessageDialog(this, erroMessage);
     }
 
-    public void addBtnGuardarListener(ActionListener listenControles) {
-        btnGuardar.addActionListener(listenControles);
-    }
 
-    public void addComboBoxListener(ActionListener listenControles) {
-        estamento.addActionListener(listenControles);
-    }
-    
-    public JComboBox<String> getComboBox(){
+    public JComboBox<String> getComboBox() {
         return estamento;
     }
 
-    
-    public Object[] getDatosUsuario(Usuario usuario){
+    public void setComboBox(int index) {
+        estamento.setSelectedIndex(index);
+    }
+
+    public Object[] getDatosUsuario(Usuario usuario) {
         Object[] elemento = {usuario.getID(), usuario.getNombre(), usuario.getCorreo(), usuario.getTelefono(), usuario.getEstamento()};
         return elemento;
     }
-    
-    public Object[][] getDatosTabla(){
+
+    public Object[][] getDatosTabla() {
         return data;
     }
-    
-    public void deshabilitarGuardar(){
+
+    //toggle para el botón de editar. Si es true, el botón se habilita, sino, se deshabilita
+    public void habilitarEditar(boolean toggle) {
+        if (toggle == true) {
+            btnEditar.setEnabled(true);
+        } else {
+            btnEditar.setEnabled(false);
+        }
+    }
+
+    public void deshabilitarGuardar() {
         btnGuardar.setEnabled(false);
     }
-    
-    public void habilitarGuardar(){
+
+    public void habilitarGuardar() {
         btnGuardar.setEnabled(true);
     }
-    
-   
-    
+
+    public void habilitarEliminar(boolean toggle) {
+        btnEliminar.setEnabled(toggle);
+    }
+
     public void addDatosTabla(Usuario usuario) {
         // Crear una nueva matriz temporal con una fila adicional
         Object[][] newData = new Object[data.length + 1][];
@@ -312,21 +337,55 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         // Copiar los elementos existentes de data a newData
         //swingutilites para envolver el código de actualización de la interfaz de usuario.
         SwingUtilities.invokeLater(() -> {
-            jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    data,
-                    new String[]{
-                        "ID", "Nombre", "Correo", "Telefono", "Estamento"
-                    }
-            ));
+            jTable1.setModel(getModeloTabla());
         });
 
         System.out.println(jTable1.getModel());
 
     }
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
+    public void editarElementoTabla(int Index, Usuario usuario) {
+        Object[] nuevosDatos = getDatosUsuario(usuario);
+        data[Index] = nuevosDatos;
+        SwingUtilities.invokeLater(() -> {
+            jTable1.setModel(getModeloTabla());
+        });
+    }
+
+    public void eliminarFila(int filaEliminar) {
+        
+        // Convertir la matriz en una lista de arreglos
+        List<Object[]> listaMatriz = new ArrayList<>(Arrays.asList(data));
+
+        // Eliminar la fila especificada
+        listaMatriz.remove(filaEliminar);
+
+        // Convertir la lista de arreglos nuevamente en una matriz
+        Object[][] nuevaMatriz = new Object[listaMatriz.size()][];
+        listaMatriz.toArray(nuevaMatriz);
+        
+        data = nuevaMatriz;
+        
+        SwingUtilities.invokeLater(() -> {
+            jTable1.setModel(getModeloTabla());
+        });
+    }
+
+    /**
+     * función que define los datos de la tabla y los nombres de cada columna.
+     * Después se necesitará el modelo en sí, para recuperar los datos
+     * correspondientes de cada fila así que por eso hice la función para
+     * obtenerla.
+     */
+    public DefaultTableModel getModeloTabla() {
+        DefaultTableModel modeloTabla = new DefaultTableModel(
+                data,
+                new String[]{
+                    "ID", "Nombre", "Correo", "Telefono", "Estamento"
+                }
+        );
+        return modeloTabla;
+    }
 
     private void estamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estamentoActionPerformed
         // TODO add your handling code here:
@@ -335,9 +394,33 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     public void btnGuardarListener(ActionListener listenControles) {
         btnGuardar.addActionListener(listenControles);
     }
-    
+
+    public void btnEditarListener(ActionListener listenControles) {
+        btnEditar.addActionListener(listenControles);
+    }
+
     public void btnListarListener(ActionListener listenControles) {
         btnListar.addActionListener(listenControles);
+    }
+    
+    public void btnOkListener(ActionListener listenControles) {
+        btnOk.addActionListener(listenControles);
+    }
+
+    public void jTableListener(MouseAdapter listenControles) {
+        jTable1.addMouseListener(listenControles);
+    }
+
+    public void btnEliminarListener(ActionListener listenControles) {
+        btnEliminar.addActionListener(listenControles);
+    }
+
+    public void addBtnGuardarListener(ActionListener listenControles) {
+        btnGuardar.addActionListener(listenControles);
+    }
+
+    public void addComboBoxListener(ActionListener listenControles) {
+        estamento.addActionListener(listenControles);
     }
 
     /**
@@ -375,7 +458,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         });
     }
 
-    
+    boolean vacio; // verifica si todo está vacio
     private DefaultTableModel model;
     private Object[][] data = {};
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -383,8 +466,8 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnListar;
+    private javax.swing.JButton btnOk;
     private javax.swing.JComboBox<String> estamento;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -399,6 +482,5 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
-
 
 }

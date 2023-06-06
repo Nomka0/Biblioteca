@@ -9,6 +9,7 @@ import java.util.List;
 import modelo.Usuario;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
+
     private List<Usuario> usuarios;
 
     public UsuarioDAOImpl() {
@@ -21,35 +22,22 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    public Usuario obtenerUsuarioPorID(int ID) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getID() == ID) {
-                return usuario;
-            }
-        }
-        return null;
+    public Usuario obtenerUsuario(int index) {
+        return usuarios.get(index);
     }
 
     @Override
     public List<Usuario> obtenerTodosLosUsuarios() {
         return usuarios;
     }
-
-    @Override
-    public void actualizarUsuario(Usuario usuario) {
-        for (Usuario u : usuarios) {
-            if (u.getID() == usuario.getID()) {
-                u.setNombre(usuario.getNombre());
-                u.setCorreo(usuario.getCorreo());
-                u.setTelefono(usuario.getTelefono());
-                u.setEstamento(usuario.getEstamento());
-                break;
-            }
-        }
+    
+    @Override 
+    public void actualizarUsuario(int index, Usuario usuarioAct){
+        usuarios.set(index, usuarioAct);
     }
 
     @Override
-    public void eliminarUsuario(int ID) {
-        usuarios.removeIf(usuario -> usuario.getID() == ID);
+    public void eliminarUsuario(int index) {
+        usuarios.remove(index);
     }
 }

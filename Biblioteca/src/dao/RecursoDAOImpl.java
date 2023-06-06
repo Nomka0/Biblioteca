@@ -7,15 +7,11 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Recurso;
-import modelo.Usuario;
 
-/**
- *
- * @author jhon
- */
 public class RecursoDAOImpl implements RecursoDAO {
+
     private List<Recurso> recursos;
-    
+
     public RecursoDAOImpl() {
         this.recursos = new ArrayList<>();
     }
@@ -26,37 +22,22 @@ public class RecursoDAOImpl implements RecursoDAO {
     }
 
     @Override
-    public Recurso obtenerRecursoPorID(int ID) {
-        for (Recurso recurso : recursos) {
-            if (recurso.getID() == ID) {
-                return recurso;
-            }
-        }
-        return null;
+    public Recurso obtenerRecurso(int index) {
+        return recursos.get(index);
     }
 
     @Override
     public List<Recurso> obtenerTodosLosRecursos() {
         return recursos;
     }
-
-    @Override
-    public void actualizarRecurso(Recurso recurso) {
-        for (Recurso r : recursos) {
-            if (r.getID() == recurso.getID()) {
-                r.setTitulo(recurso.getTitulo());
-                r.setAutor(recurso.getAutor());
-                r.setGenero(recurso.getGenero());
-                r.setTipoRecurso(recurso.getTipoRecurso());
-                break;
-            }
-        }
+    
+    @Override 
+    public void actualizarRecurso(int index, Recurso RecursoAct){
+        recursos.set(index, RecursoAct);
     }
 
     @Override
-    public void eliminarRecurso(int ID) {
-        recursos.removeIf(recurso -> recurso.getID() == ID);
+    public void eliminarRecurso(int index) {
+        recursos.remove(index);
     }
-    
-    
 }

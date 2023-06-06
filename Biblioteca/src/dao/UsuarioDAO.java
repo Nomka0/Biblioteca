@@ -11,12 +11,13 @@ public interface UsuarioDAO {
     
      void crearUsuario(Usuario usuario);
     
-     Usuario obtenerUsuarioPorID(int ID);
+     Usuario obtenerUsuario(int index);
    
      List<Usuario> obtenerTodosLosUsuarios();
     
-     void actualizarUsuario(Usuario usuario);
+     void actualizarUsuario(int index,Usuario usuario);
     
-     void eliminarUsuario(int ID);
+     void eliminarUsuario(int index);
+     
 }
 

@@ -15,11 +15,11 @@ public interface RecursoDAO {
     
     void crearRecurso(Recurso recurso);
     
-     Recurso obtenerRecursoPorID(int ID);
+    Recurso obtenerRecurso(int index);
+  
+    List<Recurso> obtenerTodosLosRecursos();
    
-     List<Recurso> obtenerTodosLosRecursos();
-    
-     void actualizarRecurso(Recurso recurso);
-    
-     void eliminarRecurso(int ID);
+    void actualizarRecurso(int index,Recurso Recurso);
+   
+    void eliminarRecurso(int index);
 }

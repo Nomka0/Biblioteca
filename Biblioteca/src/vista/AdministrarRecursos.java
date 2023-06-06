@@ -5,6 +5,11 @@
 package vista;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -37,6 +42,7 @@ public class AdministrarRecursos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        vacio = true;
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -50,7 +56,7 @@ public class AdministrarRecursos extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnListar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnOk = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         tipoRecurso = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
@@ -87,7 +93,7 @@ public class AdministrarRecursos extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Ok");
+        btnOk.setText("Ok");
 
         btnEliminar.setText("Eliminar");
 
@@ -132,7 +138,7 @@ public class AdministrarRecursos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, Short.MAX_VALUE))
+                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 49, Short.MAX_VALUE))
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -154,7 +160,7 @@ public class AdministrarRecursos extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar)
-                    .addComponent(jButton4))
+                    .addComponent(btnOk))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -226,12 +232,13 @@ public class AdministrarRecursos extends javax.swing.JFrame {
         return txtGenero.getText();
     }
 
-    public void addComboBoxListener(ActionListener listenControles) {
-        tipoRecurso.addActionListener(listenControles);
-    }
-    
-     public JComboBox<String> getComboBox(){
+
+    public JComboBox<String> getComboBox() {
         return tipoRecurso;
+    }
+
+    public void setComboBox(int index) {
+        tipoRecurso.setSelectedIndex(index);
     }
 
     public String getTitulo() {
@@ -241,64 +248,116 @@ public class AdministrarRecursos extends javax.swing.JFrame {
     public String getAutor() {
         return txtAutor.getText();
     }
-    
-    public void setID(int ID ) {
-        txtID.setText(String.valueOf(ID));
+
+    public JTable getTabla() {
+        return jTable1;
     }
-    
+
+    public void setID(int ID) {
+        txtID.setText(String.valueOf(ID));
+        vacio = false;
+    }
+
     public void setIDVacio() {
         txtID.setText("");
     }
-    
+
     public void setTitulo(String titulo) {
         txtTitulo.setText(titulo);
+        vacio = false;
     }
 
     public void setAutor(String autor) {
         txtAutor.setText(autor);
+        vacio = false;
     }
-    
+
     public void setGenero(String genero) {
         txtGenero.setText(genero);
+        vacio = false;
     }
-    
-     public void setCamposVacios(){
+
+    public void setCamposVacios() {
         setGenero("");
         setIDVacio();
         setTitulo("");
         setAutor("");
+        vacio = true;
     }
 
+    public boolean getEstaVacio(){
+        return vacio;
+    }
+
+    //para no usar todos los setters uno por uno
+    public void setDatos(int ID, String titulo, String autor, String genero) {
+        setID(ID);
+        setTitulo(titulo);
+        setAutor(autor);
+        setGenero(genero);
+        vacio = false;
+    }
 
     public void displayErrorMessage(String erroMessage) {
         JOptionPane.showMessageDialog(this, erroMessage);
     }
 
-    public void addBtnGuardarListener(ActionListener listenControles) {
+    public void btnGuardarListener(ActionListener listenControles) {
         btnGuardar.addActionListener(listenControles);
     }
-    
-    public void addBtnListarListener(ActionListener listenControles){
+
+    public void btnEditarListener(ActionListener listenControles) {
+        btnEditar.addActionListener(listenControles);
+    }
+
+    public void btnListarListener(ActionListener listenControles) {
         btnListar.addActionListener(listenControles);
     }
     
-    public void addBtnEditarListener(ActionListener listenControles){
-        btnEditar.addActionListener(listenControles);
+    public void btnOkListener(ActionListener listenControles) {
+        btnOk.addActionListener(listenControles);
     }
-    
-    public void addBtnEliminarListener(ActionListener listenControles){
+
+    public void jTableListener(MouseAdapter listenControles) {
+        jTable1.addMouseListener(listenControles);
+    }
+
+    public void btnEliminarListener(ActionListener listenControles) {
         btnEliminar.addActionListener(listenControles);
     }
 
-    public Object[] getDatosRecurso(Recurso recurso){
+    public void addBtnGuardarListener(ActionListener listenControles) {
+        btnGuardar.addActionListener(listenControles);
+    }
+
+    public void addComboBoxListener(ActionListener listenControles) {
+        tipoRecurso.addActionListener(listenControles);
+    }
+
+    public Object[] getDatosRecurso(Recurso recurso) {
         Object[] elemento = {recurso.getID(), recurso.getTitulo(), recurso.getAutor(), recurso.getGenero(), recurso.getTipoRecurso()};
         return elemento;
     }
-    
-    public Object[][] getDatosTabla(){
+
+       //toggle para el botón de editar. Si es true, el botón se habilita, sino, se deshabilita
+       public void habilitarEditar(boolean toggle) {
+        if (toggle == true) {
+            btnEditar.setEnabled(true);
+        } else {
+            btnEditar.setEnabled(false);
+        }
+    }
+
+
+    public void habilitarEliminar(boolean toggle) {
+        btnEliminar.setEnabled(toggle);
+    }
+
+
+    public Object[][] getDatosTabla() {
         return data;
     }
-    
+
     public void addDatosTabla(Recurso recurso) {
         // Crear una nueva matriz temporal con una fila adicional
         Object[][] newData = new Object[data.length + 1][];
@@ -317,27 +376,65 @@ public class AdministrarRecursos extends javax.swing.JFrame {
         // Copiar los elementos existentes de data a newData
         //swingutilites para envolver el código de actualización de la interfaz de usuario.
         SwingUtilities.invokeLater(() -> {
-            jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    data,
-                    new String[]{
-                        "ID", "Nombre", "Correo", "Telefono", "Estamento"
-                    }
-            ));
+            jTable1.setModel(getModeloTabla());
         });
 
         System.out.println(jTable1.getModel());
 
     }
-    
-    public void deshabilitarGuardar(){
+
+    /**
+     * función que define los datos de la tabla y los nombres de cada columna.
+     * Después se necesitará el modelo en sí, para recuperar los datos
+     * correspondientes de cada fila así que por eso hice la función para
+     * obtenerla.
+     */
+
+
+    public void eliminarFila(int filaEliminar) {
+        
+        // Convertir la matriz en una lista de arreglos
+        List<Object[]> listaMatriz = new ArrayList<>(Arrays.asList(data));
+
+        // Eliminar la fila especificada
+        listaMatriz.remove(filaEliminar);
+
+        // Convertir la lista de arreglos nuevamente en una matriz
+        Object[][] nuevaMatriz = new Object[listaMatriz.size()][];
+        listaMatriz.toArray(nuevaMatriz);
+        
+        data = nuevaMatriz;
+        
+        SwingUtilities.invokeLater(() -> {
+            jTable1.setModel(getModeloTabla());
+        });
+    }
+
+    public void editarElementoTabla(int Index, Recurso recurso) {
+        Object[] nuevosDatos = getDatosRecurso(recurso);
+        data[Index] = nuevosDatos;
+        SwingUtilities.invokeLater(() -> {
+            jTable1.setModel(getModeloTabla());
+        });
+    }
+
+    public DefaultTableModel getModeloTabla() {
+        DefaultTableModel modeloTabla = new DefaultTableModel(
+                data,
+                new String[]{
+                    "ID", "Titulo", "Autor", "Género", "Tipo"
+                }
+        );
+        return modeloTabla;
+    }
+
+    public void deshabilitarGuardar() {
         btnGuardar.setEnabled(false);
     }
-    
-    public void habilitarGuardar(){
+
+    public void habilitarGuardar() {
         btnGuardar.setEnabled(true);
     }
-    
-
 
     /**
      */
@@ -353,9 +450,6 @@ public class AdministrarRecursos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tipoRecursoActionPerformed
 
-    public void btnGuardarListener(ActionListener listenControles) {
-        btnGuardar.addActionListener(listenControles);
-    }
 
     /**
      * @param args the command line arguments
@@ -395,6 +489,7 @@ public class AdministrarRecursos extends javax.swing.JFrame {
         });
     }
 
+    boolean vacio; // verifica si todo está vacio
     private DefaultTableModel model;
     private Object[][] data = {};
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -402,7 +497,7 @@ public class AdministrarRecursos extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnListar;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnOk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
